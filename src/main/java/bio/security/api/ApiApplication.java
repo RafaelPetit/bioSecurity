@@ -1,6 +1,6 @@
 package bio.security.api;
 
-import bio.security.api.domain.user.Role;
+import bio.security.api.domain.user.AccessLevel;
 import bio.security.api.domain.user.User;
 import bio.security.api.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
@@ -30,7 +29,7 @@ public class ApiApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		if(userRepositoty.count() == 0) {
 			String password = passwordEncoder.encode("admin");
-			User admin = new User(0, "admin", password, Role.ADMIN);
+			User admin = new User(0, "admin", password, AccessLevel.ADMIN);
 			userRepositoty.save(admin);
 		}
 	}

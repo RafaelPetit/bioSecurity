@@ -11,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.NoSuchElementException;
 
@@ -39,28 +40,38 @@ public class Exceptions {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<?> tratarErro400(HttpMessageNotReadableException ex) {
+    public ResponseEntity<?> handleBadRequest(HttpMessageNotReadableException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<?> tratarErroBadCredentials() {
+    public ResponseEntity<?> handleBadCredentials() {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
     }
 
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<?> tratarErroAuthentication() {
+    public ResponseEntity<?> handleAuthenticationError() {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication error");
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<?> tratarErroAcessoNegado() {
+    public ResponseEntity<?> handleAccessDenied() {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> tratarErro500(Exception ex) {
+    public ResponseEntity<?> handleInternalServerError(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " +ex.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleGlobalException(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<?> handleResourceNotFoundException(ValidationException ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
 

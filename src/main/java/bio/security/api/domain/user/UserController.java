@@ -2,6 +2,7 @@ package bio.security.api.domain.user;
 
 import bio.security.api.domain.user.dto.CreateUserDto;
 import bio.security.api.domain.user.dto.ResponseCreateUserDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@SecurityRequirement(name = "bearer-key")
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -29,7 +31,7 @@ public class UserController {
         {
             var encodedPassword = passwordEncoder.encode(createUserDto.password());
 
-            var createdUser = repository.save(new User(createUserDto.biometricId(), createUserDto.username(), encodedPassword, createUserDto.role()));
+            var createdUser = repository.save(new User(createUserDto.biometricId(), createUserDto.username(), encodedPassword, createUserDto.accessLevel()));
 
             var uri = uriBuilder.path("/user/{id}").buildAndExpand(createdUser.getId()).toUri();
 

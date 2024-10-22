@@ -4,6 +4,6 @@ create table if not exists users (
     username varchar(255) not null unique,
     password varchar(255) not null,
     status boolean default true,
-    role varchar(255) not null
+    accessLevel varchar(255) not null
 );
 

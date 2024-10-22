@@ -2,7 +2,7 @@ package bio.security.api.domain.user;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public enum Role implements GrantedAuthority {
+public enum AccessLevel implements GrantedAuthority {
     ADMIN,
     USER,
     DIVISION_DIRECTOR,

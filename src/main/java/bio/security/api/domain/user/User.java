@@ -1,5 +1,6 @@
 package bio.security.api.domain.user;
 
+import bio.security.api.domain.post.Post;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -26,8 +27,11 @@ public class User implements UserDetails {
     private String password;
     private boolean status = true;
 
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private AccessLevel accessLevel;
 
     public User(String username, String encodedPassword) {
         this.username = username;
@@ -35,16 +39,16 @@ public class User implements UserDetails {
     }
 
 
-    public User(int biometric_id, String username, String password, Role role) {
+    public User(int biometric_id, String username, String password, AccessLevel accessLevel) {
         this.biometric_id = biometric_id;
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.accessLevel = accessLevel;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + accessLevel.name()));
     }
 
     @Override
