@@ -9,7 +9,7 @@ import lombok.*;
 import java.util.Date;
 
 @Entity(name = "Post")
-@Table(name = "post")
+@Table(name = "posts")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +21,7 @@ public class Post {
     private String title;
     private String content;
     private String author;
-    private AccessLevel accsessAccessLevel;
+    private AccessLevel accessLevel;
     @Setter
     private boolean status;
     private Date createdAt;
@@ -35,7 +35,7 @@ public class Post {
         this.title = title;
         this.content = content;
         this.author = autenticatedUser.getUsername();
-        this.accsessAccessLevel = autenticatedUser.getAccessLevel();
+        this.accessLevel = autenticatedUser.getAccessLevel();
     }
 
 }
