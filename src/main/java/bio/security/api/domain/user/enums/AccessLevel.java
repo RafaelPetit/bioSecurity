@@ -1,4 +1,4 @@
-package bio.security.api.domain.user;
+package bio.security.api.domain.user.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 

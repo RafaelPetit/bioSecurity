@@ -1,6 +1,6 @@
 package bio.security.api.domain.post;
 
-import bio.security.api.domain.user.AccessLevel;
+import bio.security.api.domain.user.enums.AccessLevel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +11,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("""
             select p
             from Post p
-            where p.accessLevel <= :accessLevel
+            where p.accessLevel >= :accessLevel
             """)
     Page<Post> findAllByAccessLevel(@Param("accessLevel")AccessLevel accessLevel, Pageable pageable);
 

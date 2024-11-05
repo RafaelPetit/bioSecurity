@@ -1,6 +1,6 @@
 package bio.security.api.domain.user.dto;
 
-import bio.security.api.domain.user.AccessLevel;
+import bio.security.api.domain.user.enums.AccessLevel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

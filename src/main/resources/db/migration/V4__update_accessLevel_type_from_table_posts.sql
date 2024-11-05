@@ -1,1 +1,0 @@
-alter table posts alter column access_level type int using access_level::integer;

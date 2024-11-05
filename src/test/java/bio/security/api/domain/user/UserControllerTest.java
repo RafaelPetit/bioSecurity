@@ -1,6 +1,7 @@
 package bio.security.api.domain.user;
 
 import bio.security.api.domain.user.dto.CreateUserDto;
+import bio.security.api.domain.user.enums.AccessLevel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
