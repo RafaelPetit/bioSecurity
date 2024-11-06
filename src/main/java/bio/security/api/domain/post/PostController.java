@@ -2,8 +2,9 @@ package bio.security.api.domain.post;
 
 import bio.security.api.domain.post.dto.CreatePostDto;
 import bio.security.api.domain.post.dto.ResponseCreatePostDto;
-import bio.security.api.domain.user.AccessLevel;
+import bio.security.api.domain.user.enums.AccessLevel;
 import bio.security.api.domain.user.User;
+import bio.security.api.domain.user.UserRepository;
 import bio.security.api.infra.exception.ValidationException;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -18,16 +19,22 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @SecurityRequirement(name = "bearer-key")
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("post")
 public class PostController {
 
     @Autowired
     private PostRepository repository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody CreatePostDto createPostDto, UriComponentsBuilder uriBuilder, Authentication authentication) {
 
         User autenticatedUser = (User) authentication.getPrincipal();
+
+        System.out.println("User novo: " + autenticatedUser);
 
         var createdPost = repository.save(new Post(createPostDto.title(), createPostDto.content(), autenticatedUser));
 

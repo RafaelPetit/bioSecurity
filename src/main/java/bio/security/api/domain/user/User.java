@@ -1,6 +1,8 @@
 package bio.security.api.domain.user;
 
 import bio.security.api.domain.post.Post;
+import bio.security.api.domain.user.enums.AccessLevel;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -22,15 +24,18 @@ import java.util.List;
 public class User implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int biometric_id;
+    @Column(name = "biometric_id")
+    private int biometricId;
     private String username;
     private String password;
     private boolean status = true;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Post> posts;
 
-    @Enumerated(EnumType.STRING)
+    @Column(name = "access_level")
+    @Enumerated(EnumType.ORDINAL)
     private AccessLevel accessLevel;
 
     public User(String username, String encodedPassword) {
@@ -39,11 +44,19 @@ public class User implements UserDetails {
     }
 
 
-    public User(int biometric_id, String username, String password, AccessLevel accessLevel) {
-        this.biometric_id = biometric_id;
+    public User(int biometricId, String username, String password, AccessLevel accessLevel) {
+        this.biometricId = biometricId;
         this.username = username;
         this.password = password;
         this.accessLevel = accessLevel;
+    }
+
+    public User(User autenticatedUser) {
+        this.id = autenticatedUser.getId();
+        this.biometricId = autenticatedUser.getBiometricId();
+        this.username = autenticatedUser.getUsername();
+        this.password = autenticatedUser.getPassword();
+        this.accessLevel = autenticatedUser.getAccessLevel();
     }
 
     @Override
@@ -81,5 +94,15 @@ public class User implements UserDetails {
         return true;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "accessLevel=" + accessLevel +
+                ", id=" + id +
+                ", biometricId=" + biometricId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

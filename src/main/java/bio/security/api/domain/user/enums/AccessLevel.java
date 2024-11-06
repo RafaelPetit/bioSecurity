@@ -1,11 +1,11 @@
-package bio.security.api.domain.user;
+package bio.security.api.domain.user.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 
 public enum AccessLevel implements GrantedAuthority {
     ADMIN(0),
-    DIVISION_DIRECTOR(1),
-    ENVIRONMENTAL_MINISTER(2),
+    ENVIRONMENTAL_MINISTER(1),
+    DIVISION_DIRECTOR(2),
     USER(3);
 
     private final int level;

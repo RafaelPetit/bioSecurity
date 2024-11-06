@@ -1,5 +1,6 @@
 package bio.security.api.domain.auth;
 
+import bio.security.api.domain.user.User;
 import bio.security.api.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

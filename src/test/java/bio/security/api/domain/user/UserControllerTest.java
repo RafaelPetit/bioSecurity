@@ -1,6 +1,7 @@
 package bio.security.api.domain.user;
 
 import bio.security.api.domain.user.dto.CreateUserDto;
+import bio.security.api.domain.user.enums.AccessLevel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,7 +58,7 @@ class UserControllerTest {
     @DisplayName("Should return 400 when creating a user with invalid data")
     @WithMockUser(roles = "ADMIN")
     void createUserWithInvalidData() throws Exception {
-        CreateUserDto createUserDto = new CreateUserDto(0, "", "", null);
+        CreateUserDto createUserDto = new CreateUserDto("", "", 0, null);
 
         MvcResult result = mockMvc.perform(post("/user")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -72,7 +73,7 @@ class UserControllerTest {
     @DisplayName("Should return 403 when creating a user without admin accessLevel")
     @WithMockUser(roles = "USER")
     void createUserWithoutAdminRole() throws Exception {
-        CreateUserDto createUserDto = new CreateUserDto(2, "username", "Teste123@!", AccessLevel.ADMIN);
+        CreateUserDto createUserDto = new CreateUserDto("username", "Password1!", 1, AccessLevel.ADMIN);
 
         MvcResult result = mockMvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)

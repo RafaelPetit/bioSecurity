@@ -1,7 +1,8 @@
 package bio.security.api.domain.post;
 
-import bio.security.api.domain.user.AccessLevel;
+import bio.security.api.domain.user.enums.AccessLevel;
 import bio.security.api.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -21,6 +22,7 @@ public class Post {
     private String title;
     private String content;
     private String author;
+    @Column(name = "access_level")
     private AccessLevel accessLevel;
     @Setter
     private boolean status;
@@ -28,7 +30,8 @@ public class Post {
     private Date updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User user;
 
     public Post(@NotBlank String title, @NotBlank String content, User autenticatedUser) {
@@ -36,6 +39,9 @@ public class Post {
         this.content = content;
         this.author = autenticatedUser.getUsername();
         this.accessLevel = autenticatedUser.getAccessLevel();
+        this.user = autenticatedUser;
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
     }
 
 }

@@ -1,6 +1,6 @@
 package bio.security.api;
 
-import bio.security.api.domain.user.AccessLevel;
+import bio.security.api.domain.user.enums.AccessLevel;
 import bio.security.api.domain.user.User;
 import bio.security.api.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
