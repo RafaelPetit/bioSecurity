@@ -47,12 +47,9 @@ public class UserController {
     @PostMapping("/verify")
     public ResponseEntity<?> verifyBiometry(@RequestBody BiometricDto biometricDto, Authentication authentication) {
         User authenticatedUser = (User) authentication.getPrincipal();
+
         Boolean authenticatedFingerprint = userService.verifyBiometry(biometricDto.biometricId(), authenticatedUser);
-        if(!authenticatedFingerprint) {
-            return ResponseEntity.badRequest().body("Biometry does not match.");
-        }
-        else {
-            return ResponseEntity.ok().build();
-        }
+
+        return authenticatedFingerprint ? ResponseEntity.ok().build() : ResponseEntity.badRequest().body("Biometry does not match.");
     }
 }

@@ -12,10 +12,6 @@ public class UserService {
     public Boolean verifyBiometry(Integer biometricId, User authenticatedUser) {
         User user = userRepository.findByBiometricId(biometricId);
 
-
-        System.out.println("UbiometricId: " + biometricId);
-        System.out.println("Authenticated User: " + authenticatedUser.getBiometricId());
-
-        return authenticatedUser.getBiometricId() == biometricId;
+        return biometricId >= 0 && authenticatedUser.getBiometricId() == biometricId;
     }
 }

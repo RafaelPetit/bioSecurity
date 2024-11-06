@@ -19,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @SecurityRequirement(name = "bearer-key")
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("post")
 public class PostController {
 

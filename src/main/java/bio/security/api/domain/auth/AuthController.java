@@ -27,6 +27,7 @@ public class AuthController {
 
     @PostMapping
     public ResponseEntity<?> authenticate(@RequestBody @Valid AuthData data) {
+        System.out.println("DATA QUE ESTA CHEGNADO" + data);
         var authToken = new UsernamePasswordAuthenticationToken(data.username(), data.password());
         var authentication = authenticationManager.authenticate(authToken);
 
