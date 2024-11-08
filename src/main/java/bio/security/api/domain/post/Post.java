@@ -1,5 +1,6 @@
 package bio.security.api.domain.post;
 
+import bio.security.api.domain.post.dto.CreatePostDto;
 import bio.security.api.domain.user.enums.AccessLevel;
 import bio.security.api.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -34,11 +35,11 @@ public class Post {
     @JsonBackReference
     private User user;
 
-    public Post(@NotBlank String title, @NotBlank String content, User autenticatedUser) {
-        this.title = title;
-        this.content = content;
+    public Post(CreatePostDto createPostDto, User autenticatedUser) {
+        this.title = createPostDto.title();
+        this.content = createPostDto.content();
         this.author = autenticatedUser.getUsername();
-        this.accessLevel = autenticatedUser.getAccessLevel();
+        this.accessLevel = createPostDto.accessLevel();
         this.user = autenticatedUser;
         this.createdAt = new Date();
         this.updatedAt = new Date();

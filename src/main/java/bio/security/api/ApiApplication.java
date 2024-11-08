@@ -29,7 +29,7 @@ public class ApiApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		if(userRepositoty.count() == 0) {
 			String password = passwordEncoder.encode("admin");
-			User admin = new User(0, "admin", password, AccessLevel.ADMIN);
+			User admin = new User(1, "admin", password, AccessLevel.ADMIN);
 			userRepositoty.save(admin);
 		}
 	}
