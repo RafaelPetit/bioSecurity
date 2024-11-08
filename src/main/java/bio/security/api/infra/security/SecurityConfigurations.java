@@ -43,7 +43,8 @@ public class SecurityConfigurations {
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers("login/auth").permitAll();
                     auth.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
-                    auth.requestMatchers("/user").hasRole("ADMIN").requestMatchers("/user/**").authenticated();
+                    auth.requestMatchers("/user").hasAuthority("ROLE_ADMIN");
+                    auth.requestMatchers("/user/**").authenticated();
                     auth.anyRequest().authenticated();
                 })
                 .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);

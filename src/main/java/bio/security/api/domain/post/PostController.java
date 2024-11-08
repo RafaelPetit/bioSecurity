@@ -36,7 +36,7 @@ public class PostController {
 
         System.out.println("User novo: " + autenticatedUser);
 
-        var createdPost = repository.save(new Post(createPostDto.title(), createPostDto.content(), autenticatedUser));
+        var createdPost = repository.save(new Post(createPostDto,  autenticatedUser));
 
         var uri = uriBuilder.path("/user/{id}").buildAndExpand(createdPost.getId()).toUri();
 
